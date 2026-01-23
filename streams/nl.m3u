@@ -1,4 +1,6 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="INFAST.nl@SD",INFAST (1080p)
+https://insighttv-samsung-canada.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="1AlmereTV.nl@SD",1Almere TV (720p)
 https://d3472rjicrodic.cloudfront.net/nlpo/clr-nlpo/709d5260/index.m3u8
 #EXTINF:-1 tvg-id="1TwenteTV.nl@SD",1Twente TV (1080p)
@@ -127,12 +129,12 @@ https://ms7.mx-cd.net/tv/184-782326/Omroep_Tilburg_TV.smil/playlist.m3u8
 https://d2pqcu7r58rgg1.cloudfront.net/nlpo/clr-nlpo/omroepvenlo/index.m3u8
 #EXTINF:-1 tvg-id="OmroepVenray.nl@SD",Omroep Venray (720p)
 https://d3j015sg8r68y.cloudfront.net/nlpo/clr-nlpo/omroepvenray/index.m3u8
-#EXTINF:-1 tvg-id="",Omroep West (1080p) [Not 24/7]
+#EXTINF:-1 tvg-id="OmroepWest.nl@HD",Omroep West (1080p) [Not 24/7]
 https://d1axml5ozykh3g.cloudfront.net/live/omroepwest/tv/index.m3u8
 #EXTINF:-1 tvg-id="OmroepZeeland.nl@SD",Omroep Zeeland (1080p)
 https://d3isaxd2t6q8zm.cloudfront.net/live/omroepzeeland/tv/index.m3u8
 #EXTINF:-1 tvg-id="OmropFryslan.nl@SD",Omrop Fryslân (1080p) [Not 24/7]
-https://d3pvma9xb2775h.cloudfront.net/live/omropfryslan/stream04/index.m3u8
+https://s-d15f8b0b.b.cdn.bluebillywig.com/live/omropfryslan/f8f68bd5/index.m3u8
 #EXTINF:-1 tvg-id="OOGTV.nl@SD",OOG TV (720p)
 https://d1xcc1603wntzx.cloudfront.net/nlpo/clr-nlpo/oogtv/index.m3u8
 #EXTINF:-1 tvg-id="OPENRotterdamTV.nl@SD",Open Rotterdam (480p) [Not 24/7]
@@ -177,7 +179,7 @@ https://ms2.mx-cd.net/dtv-02/260-2403096/Regio90TV.smil/playlist.m3u8
 https://d3ud9qm9b5yby9.cloudfront.net/nlpo/clr-nlpo/76ecd122/index.m3u8
 #EXTINF:-1 tvg-id="RegioTVNieuws.nl@SD",Regio TV Nieuws (1080p) [Not 24/7]
 http://highvolume04.streampartner.nl/regiomedia/regiomedia/playlist.m3u8
-#EXTINF:-1 tvg-id="RN7.nl@SD" http-referrer="https://player.rn7.nl/",RN7 TV (1080p)
+#EXTINF:-1 tvg-id="RN7.nl@SD",RN7 TV (1080p)
 #EXTVLCOPT:http-referrer=https://player.rn7.nl/
 https://streaming.rn7.nl/rn7live_abr/visualradio/playlist.m3u8
 #EXTINF:-1 tvg-id="",Rotterdam Podium TV (480p)
@@ -342,3 +344,15 @@ https://zfmzoetermeer.nl/live/master.m3u8
 https://video.uitzending.tv:19360/zo34/zo34.m3u8
 #EXTINF:-1 tvg-id="TVRain.nl@SD",Дождь (1080p) [Geo-blocked]
 https://wl.tvrain.tv/transcode/ngrp:ses_all/playlist.m3u8
+#EXTINF:-1 tvg-id="INFAST.nl@SD",INFAST (1080p)
+https://insighttv-samsung-us.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="InTrouble.nl@SD",InTrouble (1080p) [Geo-blocked]
+https://amg00861-amg00861c6-rlaxx-uk-3951.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="INFAST.nl@SD",INFAST (1080p)
+https://amg00861-amg00861c11-rlaxx-uk-3950.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="InWonder.nl@SD",InWonder (1080p) [Geo-blocked]
+https://amg00861-amg00861c14-rlaxx-uk-3954.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="SchieTV.nl@SD",Schie TV (576i)
+https://d2n2i1jp4j20kw.cloudfront.net/nlpo/clr-nlpo/schietv/index.m3u8
+#EXTINF:-1 tvg-id="INFAST.nl@SD",INFAST (1080p) [Geo-blocked]
+https://amg00861-amg00861c5-firetv-us-4727.playouts.now.amagi.tv/playlist.m3u8

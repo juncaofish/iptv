@@ -59,16 +59,14 @@ https://5e85d90130e77.streamlock.net/6010/ngrp:6010_all/playlist.m3u8
 https://60417ddeaf0d9.streamlock.net/edntv/videoedntv/playlist.m3u8
 #EXTINF:-1 tvg-id="ENTV.hn@SD",EN TV (720p)
 https://cp.cast-live.net:1936/exodotv/exodotv/playlist.m3u8
-#EXTINF:-1 tvg-id="GirasolTV.hn@SD",Girasol TV (720p)
-https://video.misistemareseller.com/Girasoltv/Girasoltv/playlist.m3u8
 #EXTINF:-1 tvg-id="GloboTV.hn@SD",Globo TV (1080p) [Not 24/7]
 https://panel.dattalive.com/8122/8122/playlist.m3u8
 #EXTINF:-1 tvg-id="GoTV.hn@SD",Go TV
 https://dvrfl03.bozztv.com/hondu/hondu-gotv/index.m3u8
 #EXTINF:-1 tvg-id="HCH.hn@SD",HCH
 https://dvrfl03.bozztv.com/hondu-hchtv/index.m3u8
-#EXTINF:-1 tvg-id="InmaculadaTV.hn@SD",Inmaculada TV (1080p) [Not 24/7]
-https://rpn3.bozztv.com/ssh101/ssh101/inmaculadatv/playlist.m3u8
+#EXTINF:-1 tvg-id="InmaculadaTV.hn@SD",Inmaculada TV (720p) [Not 24/7]
+https://live20.bozztv.com/akamaissh101/ssh101/radiotvcholy/playlist.m3u8
 #EXTINF:-1 tvg-id="JBNTV.hn@SD",JBN (1080p)
 https://mediacp.us:8081/jbntv/index.m3u8
 #EXTINF:-1 tvg-id="JehovaTV.hn@SD",Jehová TV (720p)
@@ -159,7 +157,7 @@ https://cloud2.streaminglivehd.com:1936/8004/8004/playlist.m3u8
 https://cloud2.streaminglivehd.com:1936/8032/8032/playlist.m3u8
 #EXTINF:-1 tvg-id="TVCopan.hn@SD",TV Copán (720p) [Not 24/7]
 https://s.emisoras.tv:8081/tvcopan/index.m3u8
-#EXTINF:-1 tvg-id="TVEstrella.hn@SD" http-referrer="https://player.castr.com/live_ab3fd7a07fff11eea3d485758bf6a333",TV Estrella (720p)
+#EXTINF:-1 tvg-id="TVEstrella.hn@SD",TV Estrella (720p)
 #EXTVLCOPT:http-referrer=https://player.castr.com/live_ab3fd7a07fff11eea3d485758bf6a333
 https://stream.castr.com/6540085553d46d4f7a2ec2e5/live_ab3fd7a07fff11eea3d485758bf6a333/index.fmp4.m3u8
 #EXTINF:-1 tvg-id="TVMASHD.hn@SD",TV MÁS HD (720p)
@@ -174,3 +172,5 @@ https://mediacp.us:8081/vallevision/index.m3u8
 https://d3q93l5bumjyoq.cloudfront.net/index.m3u8
 #EXTINF:-1 tvg-id="WaldivisionInternacional.hn@SD",Waldivisión Internacional (480p)
 https://cloud5.streaminglivehd.com:3114/live/tnnhonduraslive.m3u8
+#EXTINF:-1 tvg-id="GirasolTV.hn@SD",Girasol TV (1080p)
+https://59d39900ebfb8.streamlock.net:443/girasoltv/girasoltv/playlist.m3u8

@@ -1,26 +1,36 @@
 import { PlaylistParser, StreamTester, CliTable } from '../../core'
-import type { TestResult } from '../../core/streamTester'
+import type { StreamTesterResult } from '../../core/streamTester'
 import { ROOT_DIR, STREAMS_DIR } from '../../constants'
 import { Logger, Collection } from '@freearhey/core'
 import { program, OptionValues } from 'commander'
 import { Storage } from '@freearhey/storage-js'
-import { Stream } from '../../models'
+import { Playlist, Stream } from '../../models'
+import { truncate } from '../../utils'
 import { loadData } from '../../api'
 import { eachLimit } from 'async'
 import dns from 'node:dns'
 import chalk from 'chalk'
 import os from 'node:os'
-import { truncate } from '../../utils'
 
 const LIVE_UPDATE_INTERVAL = 5000
 const LIVE_UPDATE_MAX_STREAMS = 100
 
 let errors = 0
 let warnings = 0
-const results: { [key: string]: string } = {}
 let interval: string | number | NodeJS.Timeout | undefined
 let streams = new Collection<Stream>()
 let isLiveUpdateEnabled = true
+const errorStatusCodes = [
+  'ECONNREFUSED',
+  'ENOTFOUND',
+  'ENETUNREACH',
+  'EPROTO',
+  'HTTP_401_UNAUTHORIZED',
+  'HTTP_404_',
+  'HTTP_404_NOT_FOUND',
+  'HTTP_404_UNKNOWN_ERROR',
+  'HTTP_410_GONE'
+]
 
 program
   .argument('[filepath...]', 'Path to file to test')
@@ -37,12 +47,14 @@ program
     (value: string) => parseInt(value),
     30000
   )
+  .option('--fix', 'Remove all broken links found from files')
   .parse(process.argv)
 
 const options: OptionValues = program.opts()
 
 const logger = new Logger()
 const tester = new StreamTester({ options })
+const rootStorage = new Storage(ROOT_DIR)
 
 async function main() {
   if (await isOffline()) {
@@ -54,7 +66,6 @@ async function main() {
   await loadData()
 
   logger.info('loading streams...')
-  const rootStorage = new Storage(ROOT_DIR)
   const parser = new PlaylistParser({
     storage: rootStorage
   })
@@ -89,23 +100,16 @@ async function main() {
 main()
 
 async function runTest(stream: Stream) {
-  const key = stream.getUniqKey()
-  results[key] = chalk.white('LOADING...')
+  stream.statusCode = 'LOADING...'
+  const result: StreamTesterResult = await tester.test(stream)
+  stream.statusCode = result.status.code
 
-  const result: TestResult = await tester.test(stream)
-
-  let status = ''
-  const errorStatusCodes = ['ENOTFOUND', 'HTTP_404_NOT_FOUND']
-  if (result.status.ok) status = chalk.green('OK')
-  else if (errorStatusCodes.includes(result.status.code)) {
-    status = chalk.red(result.status.code)
+  if (stream.statusCode === 'OK') return
+  if (errorStatusCodes.includes(stream.statusCode) && !stream.label) {
     errors++
   } else {
-    status = chalk.yellow(result.status.code)
     warnings++
   }
-
-  results[key] = status
 }
 
 function drawTable() {
@@ -121,19 +125,24 @@ function drawTable() {
         { name: '', alignment: 'center', minLen: 3, maxLen: 3 },
         { name: 'tvg-id', alignment: 'left', color: 'green', minLen: 25, maxLen: 25 },
         { name: 'url', alignment: 'left', color: 'green', minLen: 100, maxLen: 100 },
+        { name: 'label', alignment: 'left', color: 'yellow', minLen: 13, maxLen: 13 },
         { name: 'status', alignment: 'left', minLen: 25, maxLen: 25 }
       ]
     })
+
     streams.forEach((stream: Stream, index: number) => {
-      const key = stream.getUniqKey()
-      const status = results[key] || chalk.gray('PENDING')
-      const tvgId = stream.getTvgId()
+      const tvgId = truncate(stream.getTvgId(), 25)
+      const url = truncate(stream.url, 100)
+      const color = getColor(stream)
+      const label = stream.label || ''
+      const status = stream.statusCode || 'PENDING'
 
       const row = {
         '': index,
-        'tvg-id': truncate(tvgId, 25),
-        url: truncate(stream.url, 100),
-        status
+        'tvg-id': chalk[color](tvgId),
+        url: chalk[color](url),
+        label: chalk[color](label),
+        status: chalk[color](status)
       }
       table.append(row)
     })
@@ -144,12 +153,28 @@ function drawTable() {
   }
 }
 
-function onFinish(error: Error) {
+async function removeBrokenLinks() {
+  const streamsGrouped = streams.groupBy((stream: Stream) => stream.filepath)
+  for (const filepath of streamsGrouped.keys()) {
+    let streams: Collection<Stream> = new Collection(streamsGrouped.get(filepath))
+
+    streams = streams.filter((stream: Stream) => !isBroken(stream))
+
+    const playlist = new Playlist(streams, { public: false })
+    await rootStorage.save(filepath, playlist.toString())
+  }
+}
+
+async function onFinish(error: Error | null | undefined) {
   clearInterval(interval)
 
   if (error) {
     console.error(error)
     process.exit(1)
+  }
+
+  if (options.fix) {
+    await removeBrokenLinks()
   }
 
   drawTable()
@@ -174,4 +199,21 @@ async function isOffline() {
       reject(false)
     })
   }).catch(() => {})
+}
+
+function getColor(stream: Stream): string {
+  if (!stream.statusCode) return 'gray'
+  if (stream.statusCode === 'LOADING...') return 'white'
+  if (stream.statusCode === 'OK') return 'green'
+  if (errorStatusCodes.includes(stream.statusCode) && !stream.label) return 'red'
+
+  return 'yellow'
+}
+
+function isBroken(stream: Stream): boolean {
+  if (!stream.statusCode) return false
+  if (stream.label) return false
+  if (!errorStatusCodes.includes(stream.statusCode)) return false
+
+  return true
 }
